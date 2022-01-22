@@ -1,13 +1,15 @@
 # The Hive
 ## Autonomous UAV Search and Rescue Project
 
-[Spec. Doc] (https://docs.google.com/document/d/1P7WHhIStPZlg40G0gDEU_NLqLtBaFG7JJOGIgDq67hg/edit)
+[The Spec. Doc](https://docs.google.com/document/d/1P7WHhIStPZlg40G0gDEU_NLqLtBaFG7JJOGIgDq67hg/edit)
 
 ## Task List
 
 - [ ] everyone brush up on C# and/or C++
-[C++] (https://www.w3schools.com/cpp/default.asp)
-[C#] (https://www.w3schools.com/cs/index.php)
+
+[Learn C++](https://www.w3schools.com/cpp/default.asp)
+
+[Learn C#](https://www.w3schools.com/cs/index.php)
 
 ### Front end
 - [X] create skeleton GUI (Tim Bourque)
