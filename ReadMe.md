@@ -37,3 +37,22 @@
 - [ ] add settings
 - [ ] pull metadata from video file and give to front end
 - [ ] work on Ground Sample Distance
+
+### Future tasks to add/sort
+- [ ] Additional GUI features to allow for easier user interaction
+- [ ] Clearest frame selection
+- [ ] Remote connection and “live” analysis
+- [ ] Add identification of individual anomalies
+- [ ] Making sure the software can work with more video/photo file formats, Convert video if possible
+- [ ] Improvements to the speed of the algorithm(s); parallel operations
+- [ ] Implementing additional algorithms; anomalous movement and KRXD
+- [ ] Feature for multispectral imaging
+- [ ] Bell curve selection of frame group
+- [ ] Creating a program that installs and runs natively in Windows
+- [ ] Check validity of video
+- [ ] Setting: Algorithm
+- [ ] Settings: Output location
+- [ ] Settings: Grouping of frames and removing unnecessary frames
+- [ ] Settings: Select enable or disable of parrellazation
+- [ ] progress bar
+- [ ] GIS with coordinates / timestamp
