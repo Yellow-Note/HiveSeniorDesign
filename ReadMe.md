@@ -3,9 +3,21 @@
 
 [The Spec. Doc](https://docs.google.com/document/d/1P7WHhIStPZlg40G0gDEU_NLqLtBaFG7JJOGIgDq67hg/edit)
 
+## Current Tasks
+| Name | Task | Selfmade deadline |
+|---|---|---|
+| Tim | brush up on C# and/or C++ | 1/29 |
+| James L | brush up on C# and/or C++ | 1/29 |
+| James H | brush up on C# and/or C++ | 1/29 |
+| Andrew | brush up on C# and/or C++ | 1/29 |
+| Sam | brush up on C# and/or C++ | 1/29 |
+
+
+
 ## Task List
 
 - [ ] everyone brush up on C# and/or C++
+- [ ] Flush out task list
 
 [Learn C++](https://www.w3schools.com/cpp/default.asp)
 
