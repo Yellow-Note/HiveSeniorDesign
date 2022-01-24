@@ -36,4 +36,4 @@
 - [ ] fix only square images bug in backend
 - [ ] add settings
 - [ ] pull metadata from video file and give to front end
-- [ ] work on GSD (James Hoffman) (sorry lots of acronyms, I forgot what this one means)
+- [ ] work on Ground Sample Distance
