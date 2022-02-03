@@ -6,7 +6,7 @@
 ## Current Tasks
 | Name | Task | Selfmade deadline |
 |---|---|---|
-| Tim | brush up on C# and/or C++ | 1/29 |
+| Tim | putting together the algorithms in C++ | 2/2 |
 | James L | brush up on C# and/or C++ | 1/29 |
 | James H | brush up on C# and/or C++ | 1/29 |
 | Andrew | brush up on C# and/or C++ | 1/29 |
@@ -23,14 +23,14 @@
 
 [Learn C#](https://www.w3schools.com/cs/index.php)
 
-### Front end
+### Front end Completed
 - [X] create skeleton GUI (Tim Bourque)
 - [ ] flush out the skeleton GUI
 - [ ] send signals from GUI to back end
 - [ ] add settings
 - [ ] display video metadata in front end
 
-### Back end
+### Back end Completed
 - [ ] pass info from back end to GUI
 - [ ] convert back end algorithms to C++
 - [ ] fix only square images bug in backend
