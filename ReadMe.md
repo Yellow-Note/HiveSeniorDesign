@@ -8,7 +8,7 @@
 |---|---|---|
 | Tim | putting together the algorithms in C++ | 2/2 |
 | James L | brush up on C# and/or C++ | 1/29 |
-| James H | brush up on C# and/or C++ | 1/29 |
+| James H | Working on the slicer | TBD |
 | Andrew | brush up on C# and/or C++ | 1/29 |
 | Sam | brush up on C# and/or C++ | 1/29 |
 
