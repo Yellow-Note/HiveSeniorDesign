@@ -10,7 +10,7 @@
 | James L | brush up on C# and/or C++ | 1/29 |
 | James H | Working on the slicer | TBD |
 | Andrew | brush up on C# and/or C++ | 1/29 |
-| Sam | brush up on C# and/or C++ | 1/29 |
+| Sam | GUI| TBD |
 
 
 
