@@ -6,7 +6,7 @@
 ## Current Tasks
 | Name | Task | Selfmade deadline |
 |---|---|---|
-| Tim | putting together the algorithms in C++ | 2/2 |
+| Tim | Double checking math in the RXD algorithm | 2/17 |
 | James L | brush up on C# and/or C++ | 1/29 |
 | James H | Working on the slicer | TBD |
 | Andrew | Assist Sam on GUI | Ongoing |
