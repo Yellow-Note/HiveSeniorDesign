@@ -34,7 +34,7 @@
 - [ ] pass info from back end to GUI
 - [X] convert RXD to C++
 - [ ] convert KRXD to C++
-- [ ] fix only square images bug in backend
+- [X] fix only square images bug in backend
 - [ ] add settings
 - [ ] pull metadata from video file and give to front end
 - [ ] work on Ground Sample Distance
