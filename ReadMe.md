@@ -10,7 +10,7 @@
 | James L | brush up on C# and/or C++ | 1/29 |
 | James H | Working on the slicer | TBD |
 | Andrew | Assist Sam on GUI | Ongoing |
-| Sam | GUI| 2/20|
+| Sam | PLay media and send commands (GUI)| 2/20|
 
 
 
