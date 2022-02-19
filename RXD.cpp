@@ -1,40 +1,87 @@
-Mat rxD(Mat oImg, Mat sample) {
-    Vector3d u,tmpU;
-    Matrix3d K;
-    double total;
-    Matrix<int, Dynamic, Dynamic, RowMajor> final;
-    final.resize(oImg.rows, oImg.cols);
-    double oImgSize = oImg.rows * oImg.cols;
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+#include <opencv2/highgui.hpp>
+#include <Eigen/Dense>
+#include <iostream>
+#include <math.h>
+#include <chrono>
 
-    Map<Matrix<char, Dynamic, Dynamic, RowMajor>, Unaligned, Stride<3, 1>> redImg(oImg.ptr<char>(), oImg.rows, oImg.cols);
-    Map<Matrix<char, Dynamic, Dynamic, RowMajor>, Unaligned, Stride<3, 1>> greenImg(oImg.ptr<char>() + 1, oImg.rows, oImg.cols);
-    Map<Matrix<char, Dynamic, Dynamic, RowMajor>, Unaligned, Stride<3, 1>> blueImg(oImg.ptr<char>() + 2, oImg.rows, oImg.cols);
+using namespace std;
+using namespace cv;
+using namespace Eigen;
 
-    Map<Matrix<char, Dynamic, Dynamic, RowMajor>, Unaligned, Stride<3, 1>> redImgSam(sample.ptr<char>(), oImg.rows, oImg.cols);
-    Map<Matrix<char, Dynamic, Dynamic, RowMajor>, Unaligned, Stride<3, 1>> greenImgSam(sample.ptr<char>() + 1, oImg.rows, oImg.cols);
-    Map<Matrix<char, Dynamic, Dynamic, RowMajor>, Unaligned, Stride<3, 1>> blueImgSam(sample.ptr<char>() + 2, oImg.rows, oImg.cols);
+Matrix3d calcCovMatrix(MatrixXi redSam, MatrixXi greenSam, MatrixXi blueSam) {
+    int k = 0,size = redSam.cols() * redSam.rows();
+    double sum;
+    MatrixXi orgPixels;
+    orgPixels.resize(size, 3);
+    double sampleMeans[3]={0,0,0};
 
-    int red = 0, green = 0, blue = 0;
-    //Calculate the sample mean
-    for (int i = 0; i < sample.rows; i++) {
-        for (int c = 0; c < sample.cols; c++) {
-            red += redImgSam(i, c);
-            green += greenImgSam(i, c);
-            blue += blueImgSam(i, c);
+    //reorder image into pixel by spectral band array
+    for (int i = 0; i < redSam.rows(); i++) {
+        for (int j = 0; j < redSam.cols(); j++) {
+            orgPixels.row(k) << redSam(i, j), greenSam(i, j), blueSam(i, j);
+            k++;
         }
     }
 
-    u << red / oImgSize, green / oImgSize, blue / oImgSize;
+
+    //calc sample means
+    for (int i = 0; i < 3 ;i++) {
+        for (int j = 0; j < size ;j++) {
+            sampleMeans[i] += orgPixels(j,i);
+        }
+        
+        sampleMeans[i] /= size;
+    }
+
+    //calc each COV
+    Matrix3d total;
+
+    for (int r = 0; r < 3; r++) {
+        for (int c = 0; c < 3; c++) {
+            sum = 0;
+            for (int pix = 0; pix < size; pix++) {
+                //(x-x^-)(y-y^-)
+                sum += (orgPixels(pix, c) - sampleMeans[c]) * (orgPixels(pix, r) - sampleMeans[r]);
+            }
+            total(r, c) = sum / size;
+        }
+    }
+
+    //cout << endl << "total\n" << total << endl;
+
+    return total;
+}
+
+MatrixXi rxD(MatrixXi redImg, MatrixXi blueImg, MatrixXi greenImg, MatrixXi redSam, MatrixXi greenSam, MatrixXi blueSam) {
+    Vector3d u,tmpU;
+    Matrix3d K;
+    double total;
+    Matrix<int, Dynamic, Dynamic> final;
+    final.resize(redImg.rows(), redImg.cols());
+    double redImgSize = redImg.rows() * redImg.cols();
+
+    int red = 0, green = 0, blue = 0;
+    //Calculate the sample mean
+    for (int i = 0; i < redSam.rows(); i++) {
+        for (int c = 0; c < redSam.cols(); c++) {
+            red += redSam(i, c);
+            green += greenSam(i, c);
+            blue += blueSam(i, c);
+        }
+    }
+
+    u << red / redImgSize, green / redImgSize, blue / redImgSize;
 
     //Calculate sample covariance matrix
-    K = calcCovMatrix(sample);// .inverse();
-    cout << "K: \n" << K << endl;
+    K = calcCovMatrix(redSam, greenSam, blueSam).inverse();
     //equation RXD(r) = (r-u)^T K^-1 (r-u)
     Vector<double,3> r, tmp;
     int max = 0;
     int min = 255;
-    for (int i = 0; i < oImg.rows; i++) {
-        for (int c = 0; c < oImg.cols; c++) {
+    for (int i = 0; i < redImg.rows(); i++) {
+        for (int c = 0; c < redImg.cols(); c++) {
             
             r << redImg(i,c), greenImg(i,c), blueImg(i,c);
             
@@ -42,8 +89,9 @@ Mat rxD(Mat oImg, Mat sample) {
             total = tmp.transpose() * K * tmp;
 
             final(i, c) = round(total);
+
         }
     }
-    Mat tmpImg(final.rows(), final.cols(), CV_32SC1, final.data());
-    return tmpImg;
+    
+    return final;
 }
