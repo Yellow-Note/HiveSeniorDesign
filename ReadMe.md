@@ -6,11 +6,11 @@
 ## Current Tasks
 | Name | Task | Selfmade deadline |
 |---|---|---|
-| Tim | putting together the algorithms in C++ | 2/2 |
-| James L | brush up on C# and/or C++ | 1/29 |
-| James H | brush up on C# and/or C++ | 1/29 |
-| Andrew | brush up on C# and/or C++ | 1/29 |
-| Sam | brush up on C# and/or C++ | 1/29 |
+| Tim | Double checking math in the RXD algorithm | 2/17 |
+| James L | Multithread RXD algorithm, maybe analyser down the line | Ongoing |
+| James H | Working on the slicer | TBD |
+| Andrew | Assist Sam on GUI | Ongoing |
+| Sam | Play media and send commands (GUI)| 2/20|
 
 
 
@@ -32,8 +32,9 @@
 
 ### Back end Completed
 - [ ] pass info from back end to GUI
-- [ ] convert back end algorithms to C++
-- [ ] fix only square images bug in backend
+- [X] convert RXD to C++
+- [ ] convert KRXD to C++
+- [X] fix only square images bug in backend
 - [ ] add settings
 - [ ] pull metadata from video file and give to front end
 - [ ] work on Ground Sample Distance
