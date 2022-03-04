@@ -7,10 +7,10 @@
 | Name | Task | Selfmade deadline |
 |---|---|---|
 | Tim | Double checking math in the RXD algorithm | 2/17 |
-| James L | Multithread RXD algorithm, maybe analyser down the line | Ongoing |
-| James H | Working on the slicer | TBD |
-| Andrew | Assist Sam on GUI | Ongoing |
-| Sam | Play media and send commands (GUI)| 2/20|
+| James L | Multithread RXD algorithm | Completed for currenmt build |
+| James H | Working on the slicer, testing James L's code | TBD |
+| Andrew | Working on GUI | Ongoing |
+| Sam | Working on GUI | 2/20|
 
 
 
