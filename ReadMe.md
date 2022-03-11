@@ -9,7 +9,7 @@
 | Tim | Double checking math in the RXD algorithm | 2/17 |
 | James L | Multithread RXD algorithm | Completed for current build |
 | James H | Working on the slicer | TBD |
-| Andrew | Working on GUI, testing James L's code | Ongoing |
+| Andrew | Finishing GUI Basics | 3/14 |
 | Sam | Working on GUI | 2/20|
 
 
