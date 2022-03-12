@@ -1,3 +1,4 @@
+#define _GNU_SOURCE
 #include <cstdio>
 #include <iostream>
 #include <thread>
@@ -5,19 +6,31 @@
 #include <semaphore.h>
 #include <mutex>
 #include <vector>
-#include <Windows.h>
+#include <sched.h>
 #include "queue_array.h"
+#include <pthread.h>
+#include <unistd.h>
+#include <stdio.h>
+#include <iomanip>
+
 using namespace std;
 
 unsigned int totalthreadnum = std::thread::hardware_concurrency();
 vector<array<array<array<char,3>,1080>,1920>> frame; //just fill this with random crap, this is the stand in for our video file, or rather a section of it
 mutex multex, start;
 array<array<array<char,3>,1080>,1920> fillme; //this is a stupid kludge, declaring this in fillvector created a stackdump
+int idnumber = 1;
+float progress = 0.0;
+float progslice = 0;
+
 
 void fillvector(int number);
 void worker(queue<int> myQueue, int id);
 int rxDPlaceholder(short redImg, short blueImg, short greenImg, short redSamImg, short blueSamImg, short greenSamImg);
 int analysisPlaceholder();
+void launchworker(QueueArray<int> overall, int i);
+void displayprogress();
+
 
 int main(int argc, char *argv[]) {
     if (argc == 1) return 1;
@@ -31,6 +44,9 @@ int main(int argc, char *argv[]) {
     totalthreadnum -= 1;
     int workamount = frameno / totalthreadnum;
     QueueArray<int> workerQueues(totalthreadnum);
+
+    progslice = 100.0 / (float)frameno;
+    cout << progslice << endl;
 
     int totaladded = 0;
     for (int i = 0; i < totalthreadnum - 1; i++) {
@@ -55,15 +71,40 @@ int main(int argc, char *argv[]) {
         << "Each thread gets about " << workamount << " frames to process.\n";
 
     thread workers[totalthreadnum];
-    /*
-    for (int j = 0; j < totalthreadnum; j++)
+    for (int i = 0; i < totalthreadnum; i++)
     {
+        //queue<int>* y = workerQueues.returnQueue(i);
+        //workers[i] = thread(fillvector,i);
+        //worker( workerQueues.returnQueue(i),i);
 
-        thread[j] = thread(worker(workerQueues.returnQueue(i),i)); //will figure this out later
-    }*/
+
+
+        workers[i] = thread(launchworker,workerQueues,i);
+
+        cpu_set_t cpuset;
+        CPU_ZERO(&cpuset);
+        CPU_SET(i, &cpuset);
+        int rc = pthread_setaffinity_np(workers[i].native_handle(),
+                                        sizeof(cpu_set_t), &cpuset);
+        if (rc != 0) {
+            std::cerr << "Error calling pthread_setaffinity_np: " << rc << "\n";
+        }
+
+    }
+    thread monitor;
+    monitor = thread(displayprogress);
+    for (int i = 0; i < totalthreadnum; i++)
+    {
+        workers[i].join();
+    }
+    monitor.join();
 
     return 0;
 }
+void launchworker(QueueArray<int> overall, int i) { //dumb kludge
+    worker( overall.returnQueue(i),i);
+}
+
 void fillvector(int number) //create our "images"
 {
     for (int i = 0; i < number; i++) {
@@ -82,22 +123,29 @@ void fillvector(int number) //create our "images"
 void worker(queue<int> myQueue, int id)
 {
     printf ("Worker %d has started.\n",id);
+    int i = 0;
     while(myQueue.size() != 0)
     {
         int currentFrame = myQueue.front();
         myQueue.pop();
+        //printf ("Worker %d is now processing frame %d from it's queue\n",id,i);
         //pretend we have a frame now to send to rxD
         int m = rxDPlaceholder(0,0,0,0,0,0);
+        //this_thread::sleep_for(chrono::milliseconds(400) );
         //commit modified frame back
-        multex.lock();
+        //multex.lock();
         for (int j = 0; j < 1920; j++) {
             for (int k = 0; k < 1080; k++) {
+                //printf ("RGB values before: %d, %d, &d", frame[currentFrame][j][k][0], frame[currentFrame][j][k][1], frame[currentFrame][j][k][2]);
                 frame[currentFrame][j][k][0] = rand() % 256;
                 frame[currentFrame][j][k][1] = rand() % 256;
                 frame[currentFrame][j][k][2] = rand() % 256;
+                //printf ("RGB values after: %d, %d, &d", frame[currentFrame][j][k][0], frame[currentFrame][j][k][1], frame[currentFrame][j][k][2]);
             }
         }
-        multex.unlock();
+        i++;
+        //multex.unlock();
+        progress+=progslice;
 
 
     }
@@ -108,3 +156,14 @@ int rxDPlaceholder(short redImg, short blueImg, short greenImg, short redSamImg,
     srand(time(NULL));
     return (rand()% 10000);
 }
+void displayprogress()
+{
+    while(progress < 99)
+    {
+        this_thread::sleep_for(chrono::milliseconds(200) );
+        cout << "\x1B[2J\x1B[H";
+        cout.precision(4);
+        cout << "Processing frames " << progress << "% complete.\n";
+    }
+}
+

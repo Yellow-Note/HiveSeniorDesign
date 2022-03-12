@@ -51,9 +51,9 @@ public:
         if (size == 0) return true;
         else return false;
     }
-    queue<type>* returnQueue(int index)
+    queue<type> returnQueue(int index)
     {
-        return &q[index];
+        return q[index];
     }
 };
 template <class type>

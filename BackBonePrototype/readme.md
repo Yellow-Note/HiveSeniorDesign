@@ -1,7 +1,7 @@
 # Back End Backbone Prototype
 ## James Lucid
 
-<p>How to compile: g++ -o test main.cpp -std=c++11 -pthread</p>
+<p>How to compile: g++ -o test main.cpp -std=c++14 -pthread</p>
 
 <p> What this does </p>
 This is a work in progress backbone for the back end. It doesn't do anything other than make and play with a large set of random numbers at this time.<br>
@@ -13,4 +13,5 @@ with number being the number of frames it's going to process. <br><br>
 
 <p> Current state of progress: <br>
 Successfully divides work into queues for threads to work on.<br>
-Going to emulate rxD and Analysis next.
+Multhreading works and divides based on number of cpus<br>
+Going to emulate Analysis next.
