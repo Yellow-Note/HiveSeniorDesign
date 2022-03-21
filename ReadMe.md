@@ -6,7 +6,7 @@
 ## Current Tasks
 | Name | Task | Selfmade deadline |
 |---|---|---|
-| Tim | Double checking math in the RXD algorithm | 2/17 |
+| Tim | Optimizing the RXD algorithm | 3/20 |
 | James L | Multithread RXD algorithm | Completed for current build |
 | James H | Working on the slicer | TBD |
 | Andrew | Finishing GUI Basics | 3/14 |
@@ -16,7 +16,7 @@
 
 ## Task List
 
-- [ ] everyone brush up on C# and/or C++
+- [X] everyone brush up on C# and/or C++
 - [ ] Flush out task list
 
 [Learn C++](https://www.w3schools.com/cpp/default.asp)
@@ -36,8 +36,7 @@
 - [ ] convert KRXD to C++
 - [X] fix only square images bug in backend
 - [ ] add settings
-- [ ] pull metadata from video file and give to front end
-- [ ] work on Ground Sample Distance
+- [X] work on Ground Sample Distance
 
 ### Future tasks to add/sort
 - [ ] Additional GUI features to allow for easier user interaction
