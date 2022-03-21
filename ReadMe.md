@@ -6,7 +6,7 @@
 ## Current Tasks
 | Name | Task | Selfmade deadline |
 |---|---|---|
-| Tim | Optimizing the RXD algorithm | 3/20 |
+| Tim | Optimizing the RXD algorithm and adding the CRXD and the KRXD | 3/20 |
 | James L | Multithread RXD algorithm | Completed for current build |
 | James H | Working on the slicer | TBD |
 | Andrew | Finishing GUI Basics | 3/14 |
@@ -44,8 +44,9 @@
 - [ ] Remote connection and “live” analysis
 - [ ] Add identification of individual anomalies
 - [ ] Making sure the software can work with more video/photo file formats, Convert video if possible
-- [ ] Improvements to the speed of the algorithm(s); parallel operations
-- [ ] Implementing additional algorithms; anomalous movement and KRXD
+- [ ] Improve the speed by making the algorithm run in parallel
+- [ ] Improvements to speed and memory of the algorithm
+- [ ] Implementing additional algorithms; KRXD and CRXD
 - [ ] Feature for multispectral imaging
 - [ ] Bell curve selection of frame group
 - [ ] Creating a program that installs and runs natively in Windows
