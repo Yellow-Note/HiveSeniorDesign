@@ -33,16 +33,18 @@ export default {
     }
   },
   methods: {
-    importfile(event){
+    importFile(event){
+      var result = 'none'
       if(event.target.files.length > 0) {
         var filePath = event.target.files[0].path
         /* eslint-disable no-unused-vars */
-        window.ipcRenderer.on('importfile', (event, images) => {
-          this.images = images
-
-        })
-        ipcRenderer.send('importfile', filePath)
+        
       }
+      result = ipcRenderer.invoke('importfile', filePath).then(this.callAlert(result))
+
+    },
+    callAlert(message){
+      alert(message)
     },
     changeImage() {
       this.image = require(this.images[1])

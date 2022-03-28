@@ -13,7 +13,7 @@
                 <a class="nav-link active" aria-current="page" href="/getting-started">Getting Started</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/gps">GPS</a>
+                <a class="nav-link" href="/gps" :datapoints="datapoints">GPS</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/queue">Queue</a>
@@ -28,7 +28,34 @@
       <router-view/>
   </div>
 </template>
-
+<script>
+export default{
+  data() {
+    return {
+      datapoints: [
+        {
+          imageLocation: '@/assets/images1.png',
+          imageName: 'Pin 1 Timestamp 00:00:00',
+          lat: 41.15467,
+          lng: -105.3733
+        },
+        {
+          imageLocation: '@/assets/images2.png',
+          imageName: 'Pin 2 Timestamp 12:34:15',
+          lat: 41.1544,
+          lng: -105.3745
+        },
+        {
+          imageLocation: '@/assets/logo.png',
+          imageName: 'Pin 3 Timestamp 15:14:33',
+          lat: 41.1585,
+          lng: -105.370
+        },
+      ],
+    }
+  },
+}
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

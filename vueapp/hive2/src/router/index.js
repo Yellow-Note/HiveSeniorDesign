@@ -1,5 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+var datapoints = [
+        {
+          imageLocation: '@/assets/images1.png',
+          imageName: 'Pin 1 Timestamp 00:00:00',
+          lat: 41.15467,
+          lng: -105.3733
+        },
+        {
+          imageLocation: '@/assets/images2.png',
+          imageName: 'Pin 2 Timestamp 12:34:15',
+          lat: 41.1544,
+          lng: -105.3745
+        },
+        {
+          imageLocation: '@/assets/logo.png',
+          imageName: 'Pin 3 Timestamp 15:14:33',
+          lat: 41.1585,
+          lng: -105.370
+        },
+      ]
 
 const routes = [
   {
@@ -29,7 +49,8 @@ const routes = [
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/GPSView.vue')
+    component: () => import(/* webpackChunkName: "about" */ '../views/GPSView.vue'),
+    props: {datapoints: datapoints}
   }
   ,
   {

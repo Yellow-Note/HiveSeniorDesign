@@ -83,22 +83,6 @@ function registerLocalResourceProtocol() {
   });
 }
 
-function registerLocalResourceProtocol() {
-  protocol.registerFileProtocol("local-resource", (request, callback) => {
-    const url = request.url.replace(/^local-resource:\/\//, "")
-    // Decode URL to prevent errors when loading filenames with UTF-8 chars or chars like "#"
-    const decodedUrl = decodeURI(url) // Needed in case URL contains spaces
-    try {
-      return callback(decodedUrl)
-    } catch (error) {
-      console.error(
-        "ERROR: registerLocalResourceProtocol: Could not get file path:",
-        error
-      )
-    }
-  })
-}
-
 // Exit cleanly on request from parent process in development mode.
 if (isDevelopment) {
   if (process.platform === 'win32') {
@@ -114,7 +98,7 @@ if (isDevelopment) {
   }
 }
 
-ipcMain.on('importfile', (event, args) => {
+ipcMain.handle('importfile', (event, args) => {
   // for arg in args{
   /*
     exec('CALL pipe.exe', function(err, data) {
@@ -129,8 +113,8 @@ ipcMain.on('importfile', (event, args) => {
   })
   */
 
-  tempImages = ["@/assets/logo.png", "@/assets/logo.png"];
-  
-  event.reply("importfile", tempImages);
+  //tempImages = ["@/assets/logo.png", "@/assets/logo.png"];
+  args = "hi"
+  event.reply("importfile", args);
 
 })

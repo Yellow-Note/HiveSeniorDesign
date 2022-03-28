@@ -4,22 +4,19 @@
             <div class="row">
                 <div class="col-8">
                     <div class="map-responsive">
-                        <GoogleMap class="map-responsive-googlemap"></GoogleMap>
+                        <GoogleMap class="map-responsive-googlemap" 
+                        :lat="this.currentlat" :lng="this.currentlng"></GoogleMap>
                     </div>
                 </div>
                 <div class="col-4">
                     <div class="list-group">
+                        <div v-for="data in datapoints" :key="data.imageName">
+                            <div class="list-group-item list-group-item-action" @click="changePin(data)">{{data.imageName}}</div>
+                        </div>
                         <button type="button" class="btn btn-primary">Manual Location</button>
                         <div>
-                        <a href="#" class="list-group-item list-group-item-action" aria-current="true">
-                            First Pin
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action">Second pin</a>
-                        <a href="#" class="list-group-item list-group-item-action">Third Pin</a>
-                        <a href="#" class="list-group-item list-group-item-action">Fourth Pin</a>
-                        <a class="list-group-item list-group-item-action disabled">disabled Pin</a>
                         </div>
-                    <img src="../assets/logo.png" alt="nope">
+                    <img src="currImageURL" alt="nope">
                     </div>
                 </div>
             </div>
@@ -27,15 +24,48 @@
     </div>
 </template>
 <script>
+
+import { array } from 'yargs'
 import GoogleMap from '../components/GoogleMap.vue'
 export default {
     components: {
         GoogleMap
-    }, data() {
+    }, 
+    props: {
+        datapoints: {
+            type: array,
+            default: 
+                [{
+                imageLocation: '@/assets/logo.png',
+                imageName: 'Pin Default Timestamp 99:99:99',
+                lat: 41.1585,
+                lng: -105.370
+            }]
+         },
+    },
+    computed: {
+      currImageURL: function() {
+          
+          return this.currentImage
+      }
+    },
+    data() {
         return {
-            
+            currentlat: 123.222,
+            currentlng: 123.222,
+            currentImage: '@/assets/logo.png'
         }
     },
+    
+    methods: {
+        changePin(data){
+            this.currentlat = data.lat
+            this.currentlng = data.lng
+            this.currentImage = data.imageLocation
+            return
+        }
+    }
+    
 }
 
 

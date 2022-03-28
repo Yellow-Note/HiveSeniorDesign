@@ -1,12 +1,14 @@
 <template>
+
   <GoogleMap
-    api-key="API-KEY!!!"
+    api-key="APIKEY"
     style="width: 100%; height: 500px"
     :center="center"
     :zoom="15"
     >
       <Marker :options="{ position: center }" />
     </GoogleMap>
+
 </template>
 
 <script>
@@ -15,10 +17,23 @@ import { GoogleMap, Marker } from 'vue3-google-map'
 
 export default defineComponent({
   components: { GoogleMap, Marker },
-  setup() {
-    const center = { lat: 41.1544, lng: -105.3745 }
-
-    return { center }
+  props: {
+    lng: {
+      default: 0
+    },
+    lat: {
+      default: 0
+    }
   },
+  computed: {
+    center: function () {
+        return { lat: this.lat, lng: this.lng }
+    }
+  },
+  methods: {
+    update() {
+    this.center = { lat: parseFloat(this.lat), lng: parseFloat(this.lng) }
+    }
+  }
 })
 </script>
