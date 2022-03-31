@@ -16,7 +16,7 @@
                         <button type="button" class="btn btn-primary">Manual Location</button>
                         <div>
                         </div>
-                    <img src="currImageURL" alt="nope">
+                    <img :src="currImageURL" alt="nope">
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@ export default {
         return {
             currentlat: 123.222,
             currentlng: 123.222,
-            currentImage: '@/assets/logo.png'
+            currentImage: "@/assets/logo.png"
         }
     },
     
