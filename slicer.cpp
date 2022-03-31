@@ -1,10 +1,15 @@
 #include<opencv2/opencv.hpp>
 #include<opencv2/highgui.hpp>
 #include<iostream>
+#include <direct.h>
 using namespace std;
 using namespace cv;
 //James Hoffman
-//Calculates how many frames per second we need, FH is frame height and should be calculated with the included function.
+int vfps, vwidth, vheight;
+int elevation, sensorHeight, focalLength, speed;
+string vpath;
+// 
+//Calculates how many frames per second we need.
 //outputs how many fps we need, .1 means we need a frame every 10 seconds.
 double FPS(double Hgsd, double kph) {
     double speed, hFH;
@@ -44,10 +49,35 @@ double frameGSD(double elevation, double SH, double FL) {
     //output is in M
     return FH / 1000;
 }
+//for the sets use .get(prop_ID)
+void setwidth() {
+    VideoCapture video("movie.mov");
+    cout << "frame width: " << video.get(CAP_PROP_FRAME_WIDTH);
+    video.release();
+    //CAP_PROP_FRAME_WIDTH
+}
 
-//video and output should be in "projectfolder\projectfolder"
+void setHeight() {
+    VideoCapture video("movie.mov");
+    cout << "frame width: " << video.get(CAP_PROP_FRAME_HEIGHT);
+    video.release();
+    //CAP_PROP_FRAME_HEIGHT
+}
+
+void setFPS() {
+    VideoCapture video("movie.mov");
+    cout << "frame width: " << video.get(CAP_PROP_FPS);
+    //CAP_PROP_FPS
+    video.release();
+}
+
+//video and output should be in "projectfolder\projectfolder\videoname.xxx"Output""
+//Todo: change from void to int, use the return value as exit codes
+//1 exited properly
+//0 could not create folder
+//-1 no video detected
 void slicer(double elevation, double SH, double FL, double kph) {
-    string vname;
+    string  vname;
     int index = 0, loopcount = 0;
     double fps;
     //video capture obj
@@ -63,40 +93,40 @@ void slicer(double elevation, double SH, double FL, double kph) {
         cout << "no video stream detected" << endl << endl <<endl;
         return;
     }
+    else {
+        vname.append("Output");
+        const char* fname = vname.c_str();
+        cout << fname << endl;
+        if (_mkdir(fname) != 0) {
+            cout << "failed to open folder ------" << endl;
+            video.release();
+            return;
+        }
+    }
     double vfps = video.get(CAP_PROP_FPS);
     fps = vfps / fps;
     cout << vfps << endl << fps << endl;
     //always start at first frame
     video >> frame;
-    imwrite((std::to_string(index) + ".jpg"), frame);
-    while (video.read(frame)){
-        //display the frame
-        //video >> frame;
-
-        //if (waitKey(1) == 25) {
-        //    break;
-        //}
+    imwrite(vname + "//" + (std::to_string(index) + ".jpg"), frame);
+    index = fps;
+    while (video.grab()){
+        video.set(CAP_PROP_POS_FRAMES, index);
+        video.read(frame);
         if (frame.empty()) {//if we are at the end of the video we are done
+            video.set(CAP_PROP_POS_FRAMES, CAP_PROP_FRAME_COUNT);
+            video.read(frame);
+            imwrite(vname + "//" + (std::to_string(CAP_PROP_FRAME_COUNT) + ".jpg"), frame);
             cout << "frame is empty at " + std::to_string(index) + "fraems" << endl;
             break;
         }
-        //imshow("video",frame);
-        //write the frame to memory
-
-        namedWindow("image", WINDOW_AUTOSIZE);
-        imshow("image", frame);
-        waitKey(30);
-        if (loopcount == (int)fps) {
-            cout << "loopcount == fps" << endl;
-            if (imwrite((std::to_string(index) + ".jpg"), frame)) {
-                cout << "saved image" << endl;
-            }else{
-                    cout << "failed to save image" << endl;
-            }
-            loopcount = 0;
+        if (imwrite(vname + "//" + (std::to_string(index) + ".jpg"), frame)) {
+            //saved properly
         }
-        index++;
-        loopcount++;
+        else {
+            cout << "failed to save image" << endl;
+        }
+        index += fps;
     }
     video.release();
     //destroyAllWindows();
@@ -139,6 +169,9 @@ int main()
             cin >> FL;
             //double hGSD(int Hpix, double elevation, double SH, double FL) {
             cout << GSD(hpix, elevation, SH, FL) << endl;
+        }
+        if (test == "setfps") {
+            setFPS();
         }
         if (test == "exit") {
             return 0;
