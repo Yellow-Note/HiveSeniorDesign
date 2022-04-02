@@ -8,7 +8,7 @@ const { ipcMain } = require('electron')
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
-  { scheme: 'app', privileges: { secure: true, standard: true } }
+  { scheme: 'app', privileges: { secure: true, standard: true, stream: true } }
 ])
 
 async function createWindow() {
@@ -56,6 +56,7 @@ app.on('activate', () => {
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
   registerLocalResourceProtocol()
+  registerLocalVideoProtocol()
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     try {
@@ -66,7 +67,22 @@ app.on('ready', async () => {
   }
   createWindow()
 })
-
+function registerLocalVideoProtocol () {
+  protocol.registerFileProtocol('local-video', (request, callback) => {
+    const url = request.url.replace(/^local-video:\/\//, '')
+    // Decode URL to prevent errors when loading filenames with UTF-8 chars or chars like "#"
+    const decodedUrl = decodeURI(url) // Needed in case URL contains spaces
+    try {
+      // eslint-disable-next-line no-undef
+      return callback(path.join(__static, decodedUrl))
+    } catch (error) {
+      console.error(
+        'ERROR: registerLocalVideoProtocol: Could not get file path:',
+        error
+      )
+    }
+  })
+}
 function registerLocalResourceProtocol() {
   protocol.registerFileProtocol("local-resource", (request, callback) => {
     const url = request.url.replace(/^local-resource:\/\//, "");

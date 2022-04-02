@@ -2,19 +2,19 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 var datapoints = [
         {
-          imageLocation: '@/assets/images1.png',
+          imageLocation: 'C:/Users/pyrodraco/Desktop/COSC/SeniorProject/vueapp/hive2/public/images/Alerted/picture1.jpg',
           imageName: 'Pin 1 Timestamp 00:00:00',
           lat: 41.15467,
           lng: -105.3733
         },
         {
-          imageLocation: '@/assets/images2.png',
+          imageLocation: 'C:/Users/pyrodraco/Desktop/COSC/SeniorProject/vueapp/hive2/public/images/Alerted/picture2.jpg',
           imageName: 'Pin 2 Timestamp 12:34:15',
           lat: 41.1544,
           lng: -105.3745
         },
         {
-          imageLocation: '@/assets/logo.png',
+          imageLocation: 'C:/Users/pyrodraco/Desktop/COSC/SeniorProject/vueapp/hive2/public/images/Alerted/picture3.jpg',
           imageName: 'Pin 3 Timestamp 15:14:33',
           lat: 41.1585,
           lng: -105.370
