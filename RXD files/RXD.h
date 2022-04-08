@@ -11,7 +11,6 @@ using namespace Eigen;
 using namespace cv;
 
 
-
 MatrixXi convertImgtoMatrix(Mat oImg, int colorChoice);
 
 Mat convertMatrixtoImg(MatrixXi oMatrix);

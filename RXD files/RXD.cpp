@@ -4,20 +4,13 @@
 MatrixXi convertImgtoMatrix(Mat oImg, int colorChoice) { //0 is Blue, 1 is Green, 2 is Red
 	Matrix<int, Dynamic, Dynamic> ImgtoMat;
 	ImgtoMat.resize(oImg.rows, oImg.cols);
-	//cout << oImg << endl;
 
 	for (int r = 0; r < oImg.rows; r++) {
 		for (int c = 0; c < oImg.cols; c++) {
-			//cout << oImg.at<Vec3b>(r, c) << endl;
 			Vec3b tmpVec = oImg.at<Vec3b>(r, c);
-
-			//cout << "tmpVec(" << r << "," << c << "): " << tmpVec << endl;
-
 			ImgtoMat(r, c) = (int)tmpVec[colorChoice];
-			//cout << "ImgtoMat(" << r << "," << c << "): " << ImgtoMat(r,c) << endl;
 		}
 	}
-
 	return ImgtoMat;
 }
 
@@ -31,56 +24,6 @@ Mat convertMatrixtoImg(MatrixXi oMatrix) {
 	}
 
 	return showImg;
-}
-
-//Calculates the correlation matrix of a given image
-Matrix3d calcCorrMatrix(MatrixXi rMat, MatrixXi gMat, MatrixXi bMat) {
-	int sumR = 0, sumG = 0, sumB = 0;
-	double sumRG = 0, sumGB = 0, sumRB = 0,
-		sumRR = 0, sumGG = 0, sumBB = 0;
-	int totalPixels = rMat.rows() * rMat.cols();
-
-	//Getting the sums
-	for (int i = 0; i < rMat.rows(); i++) {
-		for (int j = 0; j < rMat.cols(); j++) {
-			//intinilizing new variables to save time on calls still need to test
-			int rVal = rMat(i, j);
-			int gVal = gMat(i, j);
-			int bVal = bMat(i, j);
-
-			sumR += rVal;
-			sumG += gVal;
-			sumB += bVal;
-
-			sumRG += rVal * gVal;
-			sumGB += gVal * bVal;
-			sumRB += rVal * bVal;
-
-			sumRR += rVal * rVal;
-			sumGG += gVal * gVal;
-			sumBB += bVal * bVal;
-
-		}
-	}
-
-	//calculating corrlation coefficients
-	double corrRG = (totalPixels * sumRG - (sumR * sumG)) /
-		sqrt((totalPixels * sumRR - (sumR * sumR)) * (totalPixels * sumGG - (sumG * sumG)));
-
-
-	double corrRB = (totalPixels * sumRB - (sumR * sumB)) /
-		sqrt((totalPixels * sumRR - (sumR * sumR)) * (totalPixels * sumBB - (sumB * sumB)));
-
-
-	double corrGB = (totalPixels * sumGB - (sumG * sumB)) /
-		sqrt((totalPixels * sumGG - (sumG * sumG)) * (totalPixels * sumBB - (sumB * sumB)));
-	Matrix3d corrMatrix{
-		{ 1     , corrRG, corrRB},
-		{ corrRG, 1     , corrGB},
-		{ corrRB, corrGB, 1     }
-	};
-	/*cout << corrMatrix << endl;*/
-	return corrMatrix;
 }
 
 //Calculates the covariance matrix of a given image
@@ -101,9 +44,6 @@ Matrix3d calcCovMatrix(MatrixXi rMat, MatrixXi gMat, MatrixXi bMat) {
 			gbSum += (gVal - gMean) * (bVal - bMean);
 		}
 	}
-	//cout << "R Mean: " << rMean << endl;
-	//cout << "G Mean: " << gMean << endl;
-	//cout << "B Mean: " << bMean << endl;
 	double covRG = rgSum / (totalPix - 1);
 	double covRB = rbSum / (totalPix - 1);
 	double covGB = gbSum / (totalPix - 1);
@@ -118,14 +58,9 @@ Matrix3d calcCovMatrix(MatrixXi rMat, MatrixXi gMat, MatrixXi bMat) {
 
 //Analyzes the matrix repesentation of the image and uses a threshold to determine anomlies
 MatrixXi anomalyAnalysis(MatrixXi input,int threshold) {
-	int min = 255, max = -255;
+	//int min = 255, max = -255;
 	for (int i = 0; i < input.rows(); i++) {
 		for (int j = 0; j < input.cols(); j++) {
-
-			if (i == 200 && j == 205) {
-				cout << "Final: " << input(i, j) << endl;
-			}
-			
 			if (input(i, j) > threshold) {
 				input(i, j) = 255;
 			}
@@ -141,13 +76,12 @@ MatrixXi anomalyAnalysis(MatrixXi input,int threshold) {
 			
 		}
 	}
-	cout << "Min: " << min << endl;
-	cout << "Max: " << max << endl;
+	//cout << "Min: " << min << endl;
+	//cout << "Max: " << max << endl;
 	return input;
 }
 
 MatrixXi RXDK(MatrixXi redImg, MatrixXi blueImg, MatrixXi greenImg) {
-
     Vector3d u, tmpU;
     Matrix3d K;
     double total;
@@ -157,19 +91,18 @@ MatrixXi RXDK(MatrixXi redImg, MatrixXi blueImg, MatrixXi greenImg) {
     int red = 0, green = 0, blue = 0;
 
     //Calculate the sample mean
-    for (int i = 0; i < redSam.rows(); i++) {
-        for (int c = 0; c < redSam.cols(); c++) {
-            red += redSam(i, c);
-            green += greenSam(i, c);
-            blue += blueSam(i, c);
+    for (int i = 0; i < redImg.rows(); i++) {
+        for (int c = 0; c < redImg.cols(); c++) {
+            red += redImg(i, c);
+            green += greenImg(i, c);
+            blue += blueImg(i, c);
         }
     }
 
     u << red / redImgSize, green / redImgSize, blue / redImgSize;
 
     //Calculate sample covariance matrix
-    K = calcCovMatrix(redSam, greenSam, blueSam).inverse();
-    //cout << "K: \n" << K << endl;
+    K = calcCovMatrix(redImg, greenImg, blueImg).inverse();
     //equation RXD(r) = (r-u)^T K^-1 (r-u)
     Vector<double, 3> r, tmp;
     int max = 0;
@@ -183,14 +116,6 @@ MatrixXi RXDK(MatrixXi redImg, MatrixXi blueImg, MatrixXi greenImg) {
             total = tmp.cwiseAbs().transpose() * K * tmp.cwiseAbs();
             
             final(i, c) = round(abs(total));
-            if (i == 200 && c == 205) {
-               /* cout << "r: " << r << endl;
-                cout << "u: " << u << endl;
-                cout << "tmp: " << tmp.cwiseAbs() << endl;
-                cout << "tmp.Trans: " << tmp.cwiseAbs().transpose() << endl;
-                cout << "K: " << K << endl;
-                cout << "total: " << abs(total) << endl<<endl;*/
-            }
         }
     }
     return final;
