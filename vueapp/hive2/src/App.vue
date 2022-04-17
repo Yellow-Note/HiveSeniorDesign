@@ -1,80 +1,92 @@
+
 <template>
-  <div>
-      <!-- Nav bar -->
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">Hive</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="/getting-started">Getting Started</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/gps" :datapoints="datapoints">GPS</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/queue">Queue</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/tutorial">Tutorial</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+  <div :class="currentTheme">
+      <hive-nav @openSettings="showModal = true" />
       <router-view/>
-  </div>
+      <settings-modal/>
+      <Teleport to="body">
+        <!-- use the modal component, pass in the prop -->
+        <settings-modal :show="showModal" @close="showModal = false">
+          <template #header>
+            <div>Settings</div>
+          </template>
+          <template #body>
+            <p>
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#ThemeOptions" aria-expanded="false" aria-controls="ThemeOptions">
+                Set Theme
+              </button>
+            </p>
+            <div>
+              <div class="collapse collapse-horizontal" id="ThemeOptions">
+                <div class="card card-body" style="width: 300px;">
+                  <div class="list-group">
+                    <button type="button" class="list-group-item" @click="theme='dark-theme'">Dark Theme</button>
+                    <button type="button" class="list-group-item" @click="theme='light-theme'">Light Theme</button>
+                    <button type="button" class="list-group-item" @click="theme='basic-theme'">Basic Theme</button>
+                    <button type="button" class="list-group-item" @click="theme='gradiant-theme'">Gradiant Theme</button>
+                    <button type="button" class="list-group-item" @click="theme='repeatImage-theme'">Repeating Image Theme</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+                        <p>
+              <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                Toggle width collapse
+              </button>
+            </p>
+            <div>
+              <div class="collapse collapse-horizontal" id="collapseWidthExample">
+                <div class="card card-body" style="width: 300px;">
+                  This is some placeholder content for a horizontal collapse. It's hidden by default and shown when triggered.
+                </div>
+              </div>
+            </div>
+          </template>
+          <template #footer>
+            <div>
+              <button
+              type="button" 
+              class="btn btn-secondary"
+              @click="showModal = false"
+              >
+              Close
+              </button>
+            </div>
+          </template>
+        </settings-modal>
+      </Teleport>
+    </div>
 </template>
+
+
 <script>
+import hiveNav from './components/hiveNav.vue'
+import settingsModal from './components/settingsModal.vue'
+
 export default{
+  setup() {
+
+  },
+
   data() {
     return {
-      datapoints: [
-        {
-          imageLocation: '@/assets/images1.png',
-          imageName: 'Pin 1 Timestamp 00:00:00',
-          lat: 41.15467,
-          lng: -105.3733
-        },
-        {
-          imageLocation: '@/assets/images2.png',
-          imageName: 'Pin 2 Timestamp 12:34:15',
-          lat: 41.1544,
-          lng: -105.3745
-        },
-        {
-          imageLocation: '@/assets/logo.png',
-          imageName: 'Pin 3 Timestamp 15:14:33',
-          lat: 41.1585,
-          lng: -105.370
-        },
-      ],
-    }
+      isModalVisible: true,
+      showModal: false,
+      theme: 'dark-theme',
+    };
   },
+  components: { 
+    'hive-nav': hiveNav,
+    'settings-modal': settingsModal
+  },
+  computed: {
+    currentTheme: function () {
+      return this.theme + '-background'
+    }
+  }
 }
 </script>
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
+<style lang="scss">
+@import '@/assets/scss/custom.scss';
 </style>
+

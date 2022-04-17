@@ -117,7 +117,7 @@ if (isDevelopment) {
 ipcMain.handle('importfile', (event, args) => {
   // for arg in args{
   /*
-    exec('CALL pipe.exe', function(err, data) {
+    exec('CALL slice.exe', function(err, data) {
   
       console.log(err)
       console.log(data.toString())

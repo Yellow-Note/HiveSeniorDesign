@@ -10,10 +10,11 @@
                 </div>
                 <div class="col-4">
                     <div class="list-group">
-                        <div v-for="data in datapoints" :key="data.imageName">
-                            <div class="list-group-item list-group-item-action" @click="changePin(data, data.imageLocation)">{{data.imageName}}</div>
+                        <div v-for="video in mediaStore.videos" :key="video.timestamp">
+                            <div v-for="image in video.alertedImages" :key="image.imageName">
+                                <div class="list-group-item list-group-item-action" @click="changePin(image.gps, image.url)">Video: {{video.timestamp}} Image: {{image.imageName}}</div>
+                            </div>
                         </div>
-                        <button type="button" class="btn btn-primary">Manual Location</button>
                         <div>
                         </div>
                         <!--
@@ -32,36 +33,27 @@
 </template>
 <script>
 
-import { array } from 'yargs'
+//import { array } from 'yargs'
 import GoogleMap from '../components/GoogleMap.vue'
+import { usemediaStore } from '@/store/mediaStore'
+import {ref} from 'vue'
+
 export default {
+    setup() {
+        let mediaStore = usemediaStore()
+        let currentImage = ref(require("@/assets/drawing3.svg"))
+        let currentlat = ref(41.31685383399975)
+        let currentlng = ref(-105.56706454495476)
+        return { mediaStore, currentImage , currentlat, currentlng}
+    },
     components: {
         GoogleMap
     }, 
-    props: {
-        datapoints: {
-            type: array,
-            default: 
-                [{
-                imageLocation: 'C:/Users/pyrodraco/Desktop/COSC/SeniorProject/vueapp/hive2/public/images/Alerted/picture1.jpg',
-                imageName: 'Pin Default Timestamp 99:99:99',
-                lat: 41.1585,
-                lng: -105.370
-            }]
-         },
-    },
     computed: {
       currImageURL: function() {
           
-          return this.currentImage
+          return require(this.currentImage)
       }
-    },
-    data() {
-        return {
-            currentlat: 123.222,
-            currentlng: 123.222,
-            currentImage: "C:/Users/pyrodraco/Desktop/COSC/SeniorProject/vueapp/hive2/public/images/Alerted/picture1.jpg"
-        }
     },
     
     methods: {

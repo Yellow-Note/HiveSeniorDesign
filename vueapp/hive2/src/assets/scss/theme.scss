@@ -1,0 +1,42 @@
+@import 'dark-theme';
+@import 'light-theme';
+@import 'gradiant-theme';
+@import 'basic-theme';
+@import 'repeatImage-theme';
+@mixin themable($theme-name, $theme-map) {
+    .#{$theme-name} {
+        position: fixed;
+        top:0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    // Loop through each of the keys (sections)
+        @each $section,
+        $map in $theme-map {
+            @if ($section==container) {
+                &-background {
+                    background: map-get($map, bg);
+                    @extend .#{$theme-name};
+                }
+            }
+            @if ($section==td) {
+                &-td {
+                    color: map-get($map, color);
+                    @extend .#{$theme-name};
+                }
+            }
+
+            @else {
+                .#{$section} {
+                    color: map-get($map, color);
+                    
+                }
+            }
+        }
+    }
+}
+@include themable(light-theme, $light-theme);
+@include themable(dark-theme, $dark-theme);
+@include themable(gradiant-theme, $gradiant-theme);
+@include themable(basic-theme, $basic-theme);
+@include themable(repeatImage-theme, $repeatImage-theme);
