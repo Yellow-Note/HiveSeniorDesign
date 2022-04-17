@@ -1,5 +1,5 @@
-#ifndef SUPPORT_H
-#define SUPPORT_H
+#ifndef RXD_H
+#define RXD_H
 
 #include <Eigen/Dense>
 #include <opencv2/core.hpp>
@@ -9,7 +9,6 @@
 using namespace std;
 using namespace Eigen;
 using namespace cv;
-
 
 
 MatrixXi convertImgtoMatrix(Mat oImg, int colorChoice);
@@ -22,4 +21,7 @@ Matrix3d calcCovMatrix(MatrixXi redSam, MatrixXi greenSam, MatrixXi blueSam);
 
 MatrixXi anomalyAnalysis(MatrixXi input, int threshold);
 
+MatrixXi RXDK(MatrixXi redImg, MatrixXi blueImg, MatrixXi greenImg);
+
+void runRXD(string imgName, int threshold);
 #endif

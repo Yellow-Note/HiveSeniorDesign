@@ -25,7 +25,7 @@
 
 ### Front end Completed
 - [X] create skeleton GUI (Tim Bourque)
-- [ ] flush out the skeleton GUI
+- [X] flush out the skeleton GUI
 - [ ] send signals from GUI to back end
 - [ ] add settings
 - [ ] display video metadata in front end
