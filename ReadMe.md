@@ -6,7 +6,7 @@
 ## Current Tasks
 | Name | Task | Selfmade deadline |
 |---|---|---|
-| Tim | Optimizing the RXD algorithm and adding the CRXD and the KRXD | 3/20 |
+| Tim | Working on RXD heat map analysis | 4/21 |
 | James L | Multithread RXD algorithm | Completed for current build |
 | James H | Working on the slicer | TBD |
 | Andrew | Finishing GUI Basics | 3/14 |
@@ -26,14 +26,14 @@
 ### Front end Completed
 - [X] create skeleton GUI (Tim Bourque)
 - [X] flush out the skeleton GUI
-- [ ] send signals from GUI to back end
+- [X] send signals from GUI to back end
 - [ ] add settings
 - [ ] display video metadata in front end
 
 ### Back end Completed
-- [ ] pass info from back end to GUI
+- [X] pass info from back end to GUI
 - [X] convert RXD to C++
-- [ ] convert KRXD to C++
+- ~~[ ] convert KRXD to C++~~
 - [X] fix only square images bug in backend
 - [ ] add settings
 - [X] work on Ground Sample Distance
@@ -44,12 +44,12 @@
 - [ ] Remote connection and “live” analysis
 - [ ] Add identification of individual anomalies
 - [ ] Making sure the software can work with more video/photo file formats, Convert video if possible
-- [ ] Improve the speed by making the algorithm run in parallel
-- [ ] Improvements to speed and memory of the algorithm
+- [X] Improve the speed by making the algorithm run in parallel
+- [X] Improvements to speed and memory of the algorithm
 - [ ] Implementing additional algorithms; KRXD and CRXD
 - [ ] Feature for multispectral imaging
 - [ ] Bell curve selection of frame group
-- [ ] Creating a program that installs and runs natively in Windows
+- [X] Creating a program that installs and runs natively in Windows
 - [ ] Check validity of video
 - [ ] Setting: Algorithm
 - [ ] Settings: Output location
