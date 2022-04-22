@@ -6,7 +6,7 @@ Takes a folder of frames and creates a seperate folder and moves all the origina
 <br>
 
 <p> How to use this </p>
-**Command:** RXD.exe [threshold] [video name] <br>
+_Command:_ RXD.exe [threshold] [video name] <br>
 Recomended threshold is 30 <br>
 <br>
 
