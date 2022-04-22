@@ -1,8 +1,6 @@
 # Back End Backbone Final
 ## Tim Bourque and James Lucid
 
-<p>How to compile: g++ -o test main.cpp -std=c++14 -pthread</p>
-
 <p> What this does </p>
 Takes a folder of frames and creates a seperate folder and moves all the original images to the new folder along with performing RXD on them <br>
 <br>
