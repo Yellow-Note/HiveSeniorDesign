@@ -33,7 +33,7 @@
 ### Back end Completed
 - [X] pass info from back end to GUI
 - [X] convert RXD to C++
-- ~~[ ] convert KRXD to C++~~
+- [ ] ~~convert KRXD to C++~~
 - [X] fix only square images bug in backend
 - [ ] add settings
 - [X] work on Ground Sample Distance
