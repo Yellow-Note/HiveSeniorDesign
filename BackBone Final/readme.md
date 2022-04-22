@@ -1,17 +1,22 @@
-# Back End Backbone Prototype
-## James Lucid
+# Back End Backbone Final
+## Tim Bourque and James Lucid
 
 <p>How to compile: g++ -o test main.cpp -std=c++14 -pthread</p>
 
 <p> What this does </p>
-This is a work in progress backbone for the back end. It doesn't do anything other than make and play with a large set of random numbers at this time.<br>
-My intention here is to make it easy to implement everything once it's all in place.<br><br>
+Takes a folder of frames and creates a seperate folder and moves all the original images to the new folder along with performing RXD on them <br>
+<br>
 
 <p> How to use this </p>
-test number <br>
-with number being the number of frames it's going to process. <br><br>
+*Command:* RXD.exe \[threshold\] \[video name\] <br>
+Recomended threshold is 30 <br>
+<br>
 
-<p> Current state of progress: <br>
-Successfully divides work into queues for threads to work on.<br>
-Multhreading works and divides based on number of cpus<br>
-Going to emulate Analysis next.
+<p>Notes for successful testing:<br>
+The folder with all the images must follow the following naming convention<br>
+<br>
+[video name][extention]-slicer-out
+<br>
+
+<p>Current completion<br>
+Only returns the black and white heat map. Still needs more work to differenciant between anomolies and anomolous images.
