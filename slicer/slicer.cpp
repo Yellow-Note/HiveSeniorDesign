@@ -66,7 +66,7 @@ int slicer(int elevation, double SH, double FL, double kph, string path, int pho
         const char* fname = path.c_str();
         if (_mkdir(fname) != 0) {
             video.release();
-            return 0;
+            return 1;
         }
     }
     double vfps = video.get(CAP_PROP_FPS);
@@ -96,7 +96,7 @@ int slicer(int elevation, double SH, double FL, double kph, string path, int pho
     }
     video.release();
     //destroyAllWindows();
-    return loopcount;
+    return 0;
 }
 
 //1 exited properly
