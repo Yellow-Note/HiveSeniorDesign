@@ -82,10 +82,10 @@ int slicer(int elevation, double SH, double FL, double kph, string path, int pho
         if (frame.empty()) {//if we are at the end of the video we are done save the last frame
             video.set(CAP_PROP_POS_FRAMES, CAP_PROP_FRAME_COUNT);
             video.read(frame);
-            imwrite(path + "//" + (std::to_string(CAP_PROP_FRAME_COUNT) + ".jpg"), frame);
+            imwrite(path + "//" + (std::to_string(CAP_PROP_FRAME_COUNT) + ".png"), frame);
             break;
         }
-        if (imwrite(path + "//" + (std::to_string(loopcount) + ".jpg"), frame)) {
+        if (imwrite(path + "//" + (std::to_string(loopcount) + ".png"), frame)) {
             loopcount++;
             //saved properly
         }
